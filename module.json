@@ -20,7 +20,7 @@
     "scripts/dynamic-illumination.js"
   ],
   "url": "https://github.com/PalgamingHD/illumination",
-  "manifest": "https://raw.githubusercontent.com/PalgamingHD/illumination/main/module.json",
+  "manifest": "https://raw.githubusercontent.com/PalgamingHD/illumination/master/module.json",
   "download": "https://github.com/PalgamingHD/illumination/archive/refs/heads/master.zip",
   "bugs": "https://github.com/PalgamingHD/illumination/issues",
   "compatibility": {
