@@ -1,22 +1,36 @@
 {
-  "name": "dynamic-illumination-v12",
-  "title": "Dynamic Illumination v12",
-  "description": "Adds additional setting for lighting time of day color, additional lighting 'times' (Dawn/Dusk)",
-  "author": "delVhar",
-  "version": "0.9.0-v12",
-  "scripts": ["scripts/dynamic-illumination.js"],
-  "languages": [
-    { "lang": "en", "name": "English", "path": "lang/en.json" }
+  "id": "dynamic-illumination-v12",
+  "title": "Dynamic Illumination (v12 Fork)",
+  "description": "A Foundry VTT v12-compatible fork of delVhariant's Dynamic Illumination module. Smoothly transition scene lighting and color based on time of day.",
+  "version": "12.00",
+  "authors": [
+    {
+      "name": "delVhariant (original author)"
+    }
   ],
   "socket": true,
-  "url": "https://github.com/PalgamingHD/illumination/",
-  "manifest": "https://github.com/PalgamingHD/illumination/master/module.json",
-  "download": "https://github.com/PalgamingHD/illumination/archive/main.zip",
-  "id": "illumination-v12",
-"compatibility": {
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "esmodules": [
+    "scripts/dynamic-illumination.js"
+  ],
+  "styles": [
+    "styles/dynamic-illumination.css"
+  ],
+  "url": "https://github.com/PalgamingHD/illumination",
+  "manifest": "https://raw.githubusercontent.com/PalgamingHD/illumination/main/module.json",
+  "download": "https://github.com/PalgamingHD/illumination/archive/refs/heads/main.zip",
+  "bugs": "https://github.com/PalgamingHD/illumination/issues",
+  "compatibility": {
     "minimum": "12",
     "verified": "12"
   },
-  "minimumCoreVersion": "12",
-  "compatibleCoreVersion": "12"
+  "flags": {
+    "allowBugReporter": true
+  }
 }
