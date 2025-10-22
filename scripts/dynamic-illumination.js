@@ -1,6 +1,5 @@
 // dynamic-illumination.js — v12 compatible
 // Simple time-of-day lighting tint controller for Foundry VTT v12
-// Author: [Your Name or Fork Tag]
 // License: Same as original delVhariant/illumination module
 
 /**
