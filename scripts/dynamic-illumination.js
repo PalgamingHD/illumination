@@ -52,7 +52,7 @@ async function applyTimePreset(timeKey) {
     }
   });
 
-  ui.notifications.info(`Illumination set to ${preset.name}`);
+  ui.notifications.info(`Illumination set to ${preset.name} 2`);
 }
 
 /**
