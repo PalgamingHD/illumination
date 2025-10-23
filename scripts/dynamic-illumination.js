@@ -1,98 +1,63 @@
-// dynamic-illumination.js — Foundry VTT v12 version
-// Scene-wide time-of-day tint control using ColorAdjustmentsSamplerShader
-
 const TIME_PRESETS = {
   morning: {
     name: "Morning",
-    brightness: 0.1,
+    darkness: 0.2,
+    exposure: 0.10,
     contrast: 0.0,
     saturation: 0.05,
-    tintColor: "#ffe6b3" // pale gold
+    tintColor: "#ffe6b3"
   },
   noon: {
     name: "Noon",
-    brightness: 0.25,
+    darkness: 0.0,
+    exposure: 0.25,
     contrast: 0.05,
     saturation: 0.0,
     tintColor: "#ffffff"
   },
   dusk: {
     name: "Dusk",
-    brightness: -0.05,
+    darkness: 0.4,
+    exposure: -0.05,
     contrast: -0.05,
-    saturation: -0.1,
-    tintColor: "#b77cff" // soft golden-purple
+    saturation: -0.10,
+    tintColor: "#b77cff"
   },
   night: {
     name: "Night",
-    brightness: -0.25,
-    contrast: -0.2,
+    darkness: 0.7,
+    exposure: -0.25,
+    contrast: -0.20,
     saturation: -0.25,
-    tintColor: "#3a246b" // deep purple-blue
+    tintColor: "#3a246b"
   }
 };
 
-/**
- * Apply color adjustments to the active scene.
- */
 async function applyTimePreset(timeKey) {
   const preset = TIME_PRESETS[timeKey];
-  if (!preset) return ui.notifications.warn(`Unknown time preset: ${timeKey}`);
+  if (!preset) {
+    ui.notifications.warn(`Dynamic Illumination | Unknown time preset: ${timeKey}`);
+    return;
+  }
 
   const scene = game.scenes.current;
-  if (!scene) return;
+  if (!scene) {
+    ui.notifications.warn("Dynamic Illumination | No active scene.");
+    return;
+  }
 
-  // Update the Scene's color adjustments shader data
+  // Update the scene darkness level
+  await scene.update({ darkness: preset.darkness });
+
+  // Update shader color adjustments
   await scene.update({
     "colorAdjustment": {
-      "brightness": preset.brightness,
-      "contrast": preset.contrast,
-      "saturation": preset.saturation,
-      "tint": preset.tintColor
+      exposure: preset.exposure,
+      contrast: preset.contrast,
+      saturation: preset.saturation,
+      tint: preset.tintColor
     }
   });
 
-  ui.notifications.info(`Illumination set to ${preset.name} 2`);
+  ui.notifications.info(`Dynamic Illumination | Scene set to ${preset.name}`);
 }
-
-/**
- * Add toolbar buttons under Lighting Controls.
- */
-Hooks.on("getSceneControlButtons", (controls) => {
-  const lighting = controls.find(c => c.name === "lighting");
-  if (!lighting) return;
-
-  lighting.tools.push(
-    {
-      name: "illumination-morning",
-      title: "Set Morning Lighting",
-      icon: "fas fa-sun",
-      onClick: () => applyTimePreset("morning")
-    },
-    {
-      name: "illumination-noon",
-      title: "Set Noon Lighting",
-      icon: "fas fa-sun-bright",
-      onClick: () => applyTimePreset("noon")
-    },
-    {
-      name: "illumination-dusk",
-      title: "Set Dusk Lighting",
-      icon: "fas fa-cloud-sun",
-      onClick: () => applyTimePreset("dusk")
-    },
-    {
-      name: "illumination-night",
-      title: "Set Night Lighting",
-      icon: "fas fa-moon",
-      onClick: () => applyTimePreset("night")
-    }
-  );
-});
-
-/**
- * Initialize hook.
- */
-Hooks.once("init", () => {
-  console.log("Dynamic Illumination (v12 Shader Edition) | Initialized.");
-});
