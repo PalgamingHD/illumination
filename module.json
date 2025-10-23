@@ -2,7 +2,7 @@
   "id": "palillumination",
   "title": "Dynamic Illumination (v12 Fork)",
   "description": "A Foundry VTT v12-compatible fork of delVhariant's Dynamic Illumination module. Smoothly transition scene lighting and color based on time of day.",
-  "version": "13.00",
+  "version": "14.00",
   "authors": [
     {
       "name": "delVhariant (original author)"
