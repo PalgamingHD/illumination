@@ -1,40 +1,39 @@
-// dynamic-illumination.js — v12 compatible
-// Simple time-of-day lighting tint controller for Foundry VTT v12
-// License: Same as original delVhariant/illumination module
+// dynamic-illumination.js — Foundry VTT v12 version
+// Scene-wide time-of-day tint control using ColorAdjustmentsSamplerShader
 
-/**
- * CONFIGURATION
- * You can tweak color and intensity below.
- */
 const TIME_PRESETS = {
   morning: {
     name: "Morning",
-    ambientColor: "#ffd9a5", // warm light gold
-    ambientBrightness: 1.0,
-    ambientDarkness: 0.2
+    brightness: 0.1,
+    contrast: 0.0,
+    saturation: 0.05,
+    tintColor: "#ffe6b3" // pale gold
   },
   noon: {
     name: "Noon",
-    ambientColor: "#ffffff", // bright white
-    ambientBrightness: 1.2,
-    ambientDarkness: 0.0
+    brightness: 0.25,
+    contrast: 0.05,
+    saturation: 0.0,
+    tintColor: "#ffffff"
   },
   dusk: {
     name: "Dusk",
-    ambientColor: "#b388ff", // soft golden-purple hue
-    ambientBrightness: 0.6,
-    ambientDarkness: 0.4
+    brightness: -0.05,
+    contrast: -0.05,
+    saturation: -0.1,
+    tintColor: "#b77cff" // soft golden-purple
   },
   night: {
     name: "Night",
-    ambientColor: "#5a3b87", // deep purple
-    ambientBrightness: 0.3,
-    ambientDarkness: 0.7
+    brightness: -0.25,
+    contrast: -0.2,
+    saturation: -0.25,
+    tintColor: "#3a246b" // deep purple-blue
   }
 };
 
 /**
- * Helper: Apply a preset to the current scene.
+ * Apply color adjustments to the active scene.
  */
 async function applyTimePreset(timeKey) {
   const preset = TIME_PRESETS[timeKey];
@@ -43,18 +42,21 @@ async function applyTimePreset(timeKey) {
   const scene = game.scenes.current;
   if (!scene) return;
 
+  // Update the Scene's color adjustments shader data
   await scene.update({
-    "lighting.globalLight": true,
-    "lighting.ambientColor": preset.ambientColor,
-    "lighting.ambientBrightness": preset.ambientBrightness,
-    "lighting.darkness": preset.ambientDarkness
+    "colorAdjustment": {
+      "brightness": preset.brightness,
+      "contrast": preset.contrast,
+      "saturation": preset.saturation,
+      "tint": preset.tintColor
+    }
   });
 
   ui.notifications.info(`Illumination set to ${preset.name}`);
 }
 
 /**
- * Build a simple control interface in the Lighting Layer toolbar.
+ * Add toolbar buttons under Lighting Controls.
  */
 Hooks.on("getSceneControlButtons", (controls) => {
   const lighting = controls.find(c => c.name === "lighting");
@@ -89,8 +91,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
 });
 
 /**
- * Log module initialization.
+ * Initialize hook.
  */
 Hooks.once("init", () => {
-  console.log("Dynamic Illumination v12 | Initialized.");
+  console.log("Dynamic Illumination (v12 Shader Edition) | Initialized.");
 });
