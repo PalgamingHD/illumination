@@ -25,5 +25,16 @@
   "compatibility": {
     "minimum": "12",
     "verified": "12"
+  },
+  "relationships": {
+    "requires": [
+      {
+        "id": "smalltime",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.24.0"
+        }
+      }
+    ]
   }
 }
