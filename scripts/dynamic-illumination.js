@@ -405,3 +405,4 @@ Hooks.on("controlToken", () => _ensureFilter());
 Hooks.on("canvasTearDown", () => { _stopSTIWatcher(); _detachFilter(); });
 Hooks.once("shutdown", () => { _stopSTIWatcher(); _destroyFilter(); });
 Hooks.once("ready", () => console.log("PAL Illumination | v12 + STI (PAL owns darkness, live worldTime watcher) ready."));
+
